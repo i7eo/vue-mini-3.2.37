@@ -1,0 +1,19 @@
+{
+  "extends": ["@unconfig/ts-config/web.json", "./tsconfig.paths.json"],
+  "compilerOptions": {
+    "outDir": "dist"
+  },
+  "include": [
+    "./packages/web/**/*",
+    "./packages/web/**/*.json",
+    "./packages/web/**/typings/**/*"
+  ],
+  "exclude": [
+    "**/__tests__/**/*",
+    "**/tests/**/*",
+    "node_modules",
+    "**/dist",
+    "**/*.md",
+    "**/*.config.*"
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "extends": ["@unconfig/ts-config/vitest.json", "./tsconfig.paths.json"],
+  "compilerOptions": {
+    "outDir": "dist"
+  },
+  "include": ["**/__tests__/**/*", "**/tests/**/*"],
+  "exclude": ["node_modules", "**/dist", "**/*.md"]
+}
