@@ -21,13 +21,6 @@
   "editor.largeFileOptimizations": false,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
 
-  // 保存文件缓慢时，可以考虑开启以下 3 行配置。
-  // "typescript.tsserver.maxTsServerMemory": 4096,
-  // "vue.server.maxOldSpaceSize": 4096,
-  // "vue.server.hybridMode": true,
-  "vue.server.includeLanguages": ["vue", "markdown"], // support vitepress *.md
-  "vue.server.hybridMode": "typeScriptPluginOnly",
-
   "eslint.probe": [
     "javascript",
     "javascriptreact",

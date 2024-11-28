@@ -1,3 +1,6 @@
-const config = require('@unconfig/prettier-config').all
+const config = require('@unconfig/prettier-config').all;
 
-module.exports = config
+module.exports = {
+  ...config,
+  semi: true,
+};

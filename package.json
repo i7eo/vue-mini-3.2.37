@@ -1,7 +1,7 @@
 {
   "name": "@vue-mini/repository",
   "private": true,
-  "packageManager": "pnpm@7.0.0",
+  "packageManager": "pnpm@8.3.0",
   "type": "module",
   "keywords": [
     "monorepo",
@@ -20,13 +20,8 @@
     "postinstall": "simple-git-hooks",
     "dev": "turbo run dev --parallel --continue",
     "dev:document": "turbo run dev --filter=\"./apps/document\"",
-    "dev:wps-file-view": "turbo run dev --filter=\"./apps/wps-file-view\"",
     "build": "turbo run build",
     "build:packages": "turbo run build --filter=\"./packages/**\"",
-    "build:node": "turbo run build --filter=\"./packages/node/**\"",
-    "build:web": "turbo run build --filter=\"./packages/web/**\"",
-    "build:document": "turbo run build --filter=\"./apps/document\"",
-    "update:packages": "pnpm up \"@mercurial/*\" && pnpm up \"@unconfig/*\" && pnpm up \"@admin/*\" && pnpm up \"@client/*\"",
     "test": "turbo run test",
     "clean": "run-s \"clean:**\"",
     "clean:workspace": "turbo run clean",
@@ -57,8 +52,8 @@
     "vitest": "^2.1.6"
   },
   "engines": {
-    "node": ">=16",
-    "pnpm": ">=7"
+    "node": ">=18",
+    "pnpm": ">=8"
   },
   "pnpm": {
     "peerDependencyRules": {

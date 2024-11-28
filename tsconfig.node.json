@@ -4,17 +4,7 @@
     "composite": true,
     "outDir": "dist"
   },
-  "include": [
-    "./packages/node/**/*",
-    "./packages/node/**/*.json",
-    "./packages/node/**/typings/**/*",
-    "./packages/web/**/*.json",
-    "./packages/web/**/typings/**/*",
-    "./apps/**/*.json",
-    "./apps/**/typings/**/*",
-    "./scripts/**/*",
-    "**/*.config.*"
-  ],
+  "include": ["./scripts/**/*", "**/*.config.*"],
   "exclude": [
     "**/__tests__/**",
     "**/tests/**",

@@ -4,9 +4,9 @@
     "outDir": "dist"
   },
   "include": [
-    "./packages/web/**/*",
-    "./packages/web/**/*.json",
-    "./packages/web/**/typings/**/*"
+    "./packages/**/*",
+    "./packages/**/*.json",
+    "./packages/**/typings/**/*"
   ],
   "exclude": [
     "**/__tests__/**/*",
