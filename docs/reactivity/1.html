@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>reactivity-1</title>
+  </head>
+  <body>
+    <script>
+      function base1() {
+        const product = {
+          price: 10,
+          quantity: 2,
+        };
+
+        const totalPrice = product.price * product.quantity;
+        console.log(totalPrice); // 20
+
+        product.quantity = 5;
+        console.log(totalPrice); // 20, how can calculate  10 * 5 ? to make reactivity!
+      }
+
+      function base2() {
+        const product = {
+          price: 10,
+          quantity: 2,
+        };
+
+        const effect = () => product.price * product.quantity;
+
+        console.log(effect()); // 20
+
+        product.quantity = 5;
+        console.log(effect()); // 20, how can calculate  10 * 5 ? to make reactivity!
+      }
+
+      function definePropertyBase1() {
+        const product = {
+          // price: 10,
+          // quantity: 2,
+        };
+
+        Object.defineProperties(product, {
+          price: {
+            // value: 10,
+            configurable: true,
+            enumerable: true,
+            // // writable: true,
+            get() {
+              return this._price ?? 10;
+            },
+            set(value) {
+              this._price = value;
+            },
+          },
+          quantity: {
+            // value: 2,
+            configurable: true,
+            enumerable: true,
+            // // writable: true,
+            get() {
+              return this._quantity ?? 2;
+            },
+            set(value) {
+              this._quantity = value;
+            },
+          },
+          totalPrice: {
+            configurable: true,
+            enumerable: true,
+            get() {
+              return this._totalPrice ?? this.price * this.quantity;
+            },
+            set(value) {
+              this._totalPrice = value;
+            },
+          },
+        });
+
+        console.log(product.totalPrice);
+        product.quantity = 5;
+        console.log(product.totalPrice);
+      }
+
+      function definePropertyBase2() {
+        let quantity = 2;
+        const product = {
+          price: 10,
+          quantity,
+        };
+
+        let total = 0;
+        const effect = () => (total = product.price * product.quantity);
+
+        effect();
+        console.log('🚀 ~ definePropertyBase2 ~ effect 1:', total);
+
+        Object.defineProperty(product, 'quantity', {
+          get() {
+            return quantity;
+          },
+          set(value) {
+            quantity = value;
+            effect();
+            console.log('🚀 ~ definePropertyBase2 ~ effect 2:', total);
+          },
+        });
+        product.quantity = 5;
+      }
+
+      function proxyBase1() {
+        const product = {
+          price: 10,
+          quantity: 2,
+        };
+
+        let total = 0;
+        const effect = () => (total = product.price * product.quantity);
+
+        effect();
+        console.log('🚀 ~ proxyBase1 ~ effect 1:', total);
+
+        const productProxy = new Proxy(product, {
+          get(target, property, revicer) {
+            return target[property];
+          },
+          set(target, property, value, revicer) {
+            target[property] = value;
+            effect();
+            console.log('🚀 ~ proxyBase1 ~ effect 2:', total);
+          },
+        });
+        productProxy.quantity = 5;
+      }
+
+      function proxyBase2() {
+        const p1 = {
+          lastname: '张',
+          firstname: '三',
+          get fullname() {
+            return this.lastname + this.firstname;
+          },
+        };
+
+        const p2 = {
+          lastname: '李',
+          firstname: '四',
+          get fullname() {
+            return this.lastname + this.firstname;
+          },
+        };
+
+        console.log('🚀 ~ proxyBase2 ~ p1.fullname:', p1.fullname);
+        console.log(
+          '🚀 ~ proxyBase2 ~ p2.fullname:',
+          Reflect.get(p2, 'fullname'),
+        );
+        console.log(
+          '🚀 ~ proxyBase2 ~ p1.fullname:',
+          Reflect.get(p1, 'fullname', p2),
+        );
+      }
+
+      function proxyBase3() {
+        const p1 = {
+          lastname: '张',
+          firstname: '三',
+          get fullname() {
+            console.log("🚀 ~ getfullname ~ this:", this)
+            return this.lastname + this.firstname;
+          },
+        };
+
+        const proxyP1 = new Proxy(p1, {
+          get(target, property, receiver) {
+            console.log('🚀 ~ get ~ trigger');
+            // return target[property];
+            return Reflect.get(target, property, receiver)
+          },
+        });
+
+        proxyP1.fullname // 正常情况下，proxy 之后，fullname 中的 this.lastname 与 this.firstname 调用时也会触发 getter 的 consolelog 但此时没触发，原因是其中的 this 还是指向 p1
+        // 将 return target[property] 改为 return Reflect.get(target, property, receiver) 后成功修正 this 触发三次 getter
+      }
+
+      // base1()
+      // base2()
+      // definePropertyBase1()
+      // definePropertyBase2()
+      // proxyBase1()
+      // proxyBase2();
+      proxyBase3();
+    </script>
+  </body>
+</html>

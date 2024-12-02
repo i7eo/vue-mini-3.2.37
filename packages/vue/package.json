@@ -1,0 +1,61 @@
+{
+  "name": "@vue-mini/vue",
+  "version": "0.0.0",
+  "packageManager": "pnpm@9.14.2",
+  "type": "module",
+  "license": "MIT",
+  "author": "i7eo",
+  "files": [
+    "*.d.ts",
+    "dist"
+  ],
+  "main": "./src/index.ts",
+  "module": "./src/index.ts",
+  "unpkg": "dist/vue.global.js",
+  "jsdelivr": "dist/vue.global.js",
+  "publishConfig": {
+    "main": "./dist/vue.cjs.js",
+    "module": "./dist/vue.esm.js",
+    "types": "./dist/vue.d.ts",
+    "exports": {
+      ".": {
+        "require": "./dist/vue.cjs.js",
+        "import": "./dist/vue.esm.js"
+      },
+      "./*": [
+        "./*",
+        "./*.d.ts"
+      ]
+    },
+    "typesVersions": {
+      "*": {
+        "*": [
+          "./dist/*",
+          "./*"
+        ]
+      }
+    }
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "DEV=true pnpm build",
+    "test": "vitest",
+    "format": "prettier \"./**/*.{js,ts,jsx,tsx,md,json,jsonc}\" --write",
+    "lint": "TIMING=1 eslint \"./**/*.{js,jsx,ts,tsx,md,json,jsonc}\" --fix",
+    "clean": "run-p \"clean:**\"",
+    "clean:cache": "rimraf .turbo && rimraf dist",
+    "clean:deps": "rimraf node_modules"
+  },
+  "dependencies": {
+    "@vue-mini/share": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.1",
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2"
+  },
+  "engines": {
+    "node": ">=23",
+    "pnpm": ">=9"
+  }
+}
