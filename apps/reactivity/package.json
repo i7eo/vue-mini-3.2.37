@@ -1,0 +1,38 @@
+{
+  "name": "reactivity",
+  "version": "0.0.0",
+  "private": true,
+  "packageManager": "pnpm@9.14.2",
+  "type": "module",
+  "scripts": {
+    "dev": "DEV=true vite",
+    "build": "PROD=true vite build",
+    "preview": "PROD=true vite preview",
+    "test": "vitest",
+    "format": "prettier \"./**/*.{js,ts,jsx,tsx,md,json,jsonc}\" --write",
+    "lint": "TIMING=1 eslint \"./**/*.{js,jsx,ts,tsx,md,json,jsonc}\" --fix",
+    "clean": "run-p \"clean:**\"",
+    "clean:cache": "rimraf .turbo && rimraf dist",
+    "clean:deps": "rimraf node_modules"
+  },
+  "dependencies": {
+    "@tailwindcss/aspect-ratio": "^0.4.2",
+    "@vue-mini/vue": "workspace:*",
+    "clsx": "^2.1.1",
+    "dayjs": "^1.11.13",
+    "tailwind-merge": "^2.5.5",
+    "tailwindcss": "^3.4.15",
+    "tailwindcss-animate": "^1.0.7"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.1",
+    "autoprefixer": "^10.4.20",
+    "cssnano": "^7.0.6",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.1"
+  },
+  "engines": {
+    "node": ">=23",
+    "pnpm": ">=9"
+  }
+}

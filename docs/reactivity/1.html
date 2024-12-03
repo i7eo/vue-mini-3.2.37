@@ -183,13 +183,33 @@
         // 将 return target[property] 改为 return Reflect.get(target, property, receiver) 后成功修正 this 触发三次 getter
       }
 
+      function mapDifferWithWeakMap() {
+        let obj1 = {
+          name: 'i7eo'
+        }
+        const obj1Map = new Map()
+        obj1Map.set(obj1, 'value')
+        obj1 = null
+        console.log("🚀 ~ mapDifferWithWeakMap ~ obj1Map:", obj1Map) // {key: {name: 'i7eo'}}
+
+        let obj2 = {
+          name: 'i7eo'
+        }
+        const obj2Map = new WeakMap()
+        obj2Map.set(obj2, 'value')
+        obj2 = null
+        console.log("🚀 ~ mapDifferWithWeakMap ~ obj2Map:", obj2Map) // {}
+        // obj2 不存在其他引用时，WeakMap 不会阻止垃圾回收，基于 obj2 的引用将会被清除。这就是弱饮用
+      }
+
       // base1()
       // base2()
       // definePropertyBase1()
       // definePropertyBase2()
       // proxyBase1()
       // proxyBase2();
-      proxyBase3();
+      // proxyBase3();
+      mapDifferWithWeakMap()
     </script>
   </body>
 </html>

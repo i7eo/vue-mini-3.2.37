@@ -19,7 +19,7 @@
     "preinstall": "npx only-allow pnpm",
     "postinstall": "simple-git-hooks",
     "dev": "turbo run dev --parallel --continue",
-    "dev:document": "turbo run dev --filter=\"./apps/document\"",
+    "dev:reactivity": "turbo run dev --filter=\"./apps/reactivity\"",
     "build": "turbo run build",
     "build:packages": "turbo run build --filter=\"./packages/**\"",
     "test": "turbo run test",

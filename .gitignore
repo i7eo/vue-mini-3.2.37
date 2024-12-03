@@ -1,6 +1,50 @@
-# Editor directories and files
-.idea
+############################################################ Universal ############################################################
+
+# Compiled output
+dist
+dist-ssr
+
+# Deps
+node_modules
+
+# Logs
+logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# misc
 .DS_Store
+*.pem
+
+# IDEs and editors
+.idea
+.project
+.classpath
+.c9
+*.launch
+.settings
+*.sublime-workspace
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# dotenv environment variable files
+# .env*
+# .env*.local
+
+# temp directory
+.temp
+.tmp
+
+# Other
 *.suo
 *.ntvs*
 *.njsproj
@@ -10,28 +54,29 @@
 .eslintcache
 .shadowenv.d
 .cache
-
-# Package Manager
-node_modules
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
-.pnpm-store
-pnpm-lock.yaml
-# Logs
-logs
-*.log
-
-# Bundle
-dist
-# coverage
-
-# local env files
+.pnp
+.pnp.js
+.yarn/install-state.gz
+.vercel
 *.local
-# .eslintcache
-tmp
 
-# vitepress
-apps/document/.vitepress/cache
+############################################################ Universal ############################################################
+
+############################################################  Backend  ############################################################
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Diagnostic reports (https://nodejs.org/api/report.html)
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+############################################################  Backend  ############################################################
+
+############################################################  Current  ############################################################
+.pnpm-store
+# pnpm-lock.yaml
+# # use vercel node runtime serverless, must upload dist files
+# !apps/backend/dist

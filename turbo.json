@@ -1,17 +1,13 @@
 {
   "tasks": {
     "dev": {
-      "cache": false
+      "cache": false,
+      "persistent": true
     },
 
     "build": {
       "outputs": ["dist/**"],
       "dependsOn": ["^build"]
-    },
-
-    "build:document": {
-      "outputs": ["dist/**"],
-      "dependsOn": ["build"]
     },
 
     "test": {

@@ -1,5 +1,5 @@
 {
-  "name": "@vue-mini/vue",
+  "name": "@vue-mini/reactivity",
   "version": "0.0.0",
   "packageManager": "pnpm@9.14.2",
   "type": "module",
@@ -11,16 +11,14 @@
   ],
   "main": "./src/index.ts",
   "module": "./src/index.ts",
-  "unpkg": "dist/vue.global.js",
-  "jsdelivr": "dist/vue.global.js",
   "publishConfig": {
-    "main": "./dist/vue.cjs.js",
-    "module": "./dist/vue.esm.js",
-    "types": "./dist/vue.d.ts",
+    "main": "./dist/index.cjs.js",
+    "module": "./dist/index.esm.js",
+    "types": "./dist/index.d.ts",
     "exports": {
       ".": {
-        "require": "./dist/vue.cjs.js",
-        "import": "./dist/vue.esm.js"
+        "require": "./dist/index.cjs.js",
+        "import": "./dist/index.esm.js"
       },
       "./*": [
         "./*",
@@ -45,10 +43,6 @@
     "clean": "run-p \"clean:**\"",
     "clean:cache": "rimraf .turbo && rimraf dist",
     "clean:deps": "rimraf node_modules"
-  },
-  "dependencies": {
-    "@vue-mini/reactivity": "workspace:*",
-    "@vue-mini/share": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "^22.10.1",
