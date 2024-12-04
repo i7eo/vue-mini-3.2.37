@@ -1,3 +1,4 @@
+import { isObject } from '@vue-mini/share';
 import { mutableHandlers } from './handlers';
 
 export const reactiveMap = new WeakMap<object, any>();
@@ -22,3 +23,6 @@ function createReactiveObject(
 
   return targetProxy;
 }
+
+export const toReactive = <T>(value: T): T =>
+  isObject(value) ? reactive(value) : value;

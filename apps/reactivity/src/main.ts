@@ -1,5 +1,5 @@
 import './style.css';
-import { effect, reactive } from '@vue-mini/vue';
+import { effect, ref } from '@vue-mini/vue';
 import typescriptLogo from './typescript.svg';
 import viteLogo from '/vite.svg';
 
@@ -37,24 +37,58 @@ document.querySelector('#app')!.innerHTML = entryInnerHTML;
 // }
 // reactive1();
 
-function reactive2() {
+// function reactive2() {
+//   document.querySelector('#reactivity-test')!.innerHTML =
+//     `<p id="effect-1" class="my-1"></p><p id="effect-2" class="my-1"></p>`;
+
+//   const state = reactive({
+//     name: 'i7eo',
+//   });
+
+//   effect(() => {
+//     document.querySelector('#effect-1')!.innerHTML = state.name;
+//   });
+
+//   effect(() => {
+//     document.querySelector('#effect-2')!.innerHTML = state.name;
+//   });
+
+//   setTimeout(() => {
+//     state.name = 'George';
+//   }, 2000);
+// }
+// reactive2();
+
+// function ref1() {
+//   document.querySelector('#reactivity-test')!.innerHTML =
+//     `<p id="ref-1" class="my-1"></p>`;
+
+//   const state = ref({
+//     name: 'i7eo',
+//   });
+
+//   effect(() => {
+//     document.querySelector('#ref-1')!.innerHTML = state.value.name;
+//   });
+
+//   setTimeout(() => {
+//     state.value.name = 'George';
+//   }, 2000);
+// }
+// ref1();
+
+function ref2() {
   document.querySelector('#reactivity-test')!.innerHTML =
-    `<p id="effect-1" class="my-1"></p><p id="effect-2" class="my-1"></p>`;
+    `<p id="ref-2" class="my-1"></p>`;
 
-  const state = reactive({
-    name: 'i7eo',
-  });
+  const state = ref('i7eo');
 
   effect(() => {
-    document.querySelector('#effect-1')!.innerHTML = state.name;
-  });
-
-  effect(() => {
-    document.querySelector('#effect-2')!.innerHTML = state.name;
+    document.querySelector('#ref-2')!.innerHTML = state.value;
   });
 
   setTimeout(() => {
-    state.name = 'George';
+    state.value = 'George';
   }, 2000);
 }
-reactive2();
+ref2();

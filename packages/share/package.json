@@ -1,7 +1,7 @@
 {
   "name": "@vue-mini/share",
   "version": "0.0.0",
-  "packageManager": "pnpm@9.14.2",
+  "packageManager": "pnpm@9.14.4",
   "type": "module",
   "license": "MIT",
   "author": "i7eo",
@@ -43,6 +43,10 @@
     "clean": "run-p \"clean:**\"",
     "clean:cache": "rimraf .turbo && rimraf dist",
     "clean:deps": "rimraf node_modules"
+  },
+  "dependencies": {
+    "es-toolkit": "^1.29.0",
+    "nanoid": "^5.0.9"
   },
   "devDependencies": {
     "@types/node": "^22.10.1",

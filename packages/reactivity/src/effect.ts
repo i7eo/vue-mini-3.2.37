@@ -1,8 +1,19 @@
+import { isArray } from '@vue-mini/share';
 import { type Dep, createDep } from './dep';
 
 type KeyToDepMap = Map<any, Dep>;
+/**
+ * 收集所有依赖的 WeakMap 实例：
+ * 1. `key`：响应性对象
+ * 2. `value`：`Map` 对象
+ * 		1. `key`：响应性对象的指定属性
+ * 		2. `value`：指定对象的指定属性的 执行函数
+ */
 const targetMap = new WeakMap<any, KeyToDepMap>();
 
+/**
+ * 记录当前的 effect（单例）
+ */
 // eslint-disable-next-line import/no-mutable-exports
 export let activeEffect: ReactiveEffect | undefined;
 
@@ -30,8 +41,8 @@ export function effect<T = any>(fn: () => T) {
 
 /**
  * 收集依赖
- * @param target
- * @param key
+ * @param target WeakMap 的 key
+ * @param key 代理对象的 key，当依赖被触发时，需要根据该 key 获取
  */
 export function track(target: object, key: string | symbol) {
   if (!activeEffect) return;
@@ -59,27 +70,30 @@ export function trackEffects(dep: Dep) {
 
 /**
  * 触发依赖
- * @param target
- * @param key
+ * @param target WeakMap 的 key
+ * @param key 代理对象的 key，当依赖被触发时，需要根据该 key 获取
  * @param value
  */
 // @ts-ignore
 // eslint-disable-next-line unused-imports/no-unused-vars
 export function trigger(target: object, key: string | symbol, value: unknown) {
+  // 依据 target 获取存储的 map 实例
   const depMap = targetMap.get(target);
+  // 如果 map 不存在，则直接 return
   if (!depMap) return;
 
   const deps: (Dep | undefined)[] = [];
-  if (key === 'length' && Array.isArray(target)) {
+  if (key === 'length' && isArray(target) && depMap.get(key)) {
     depMap.forEach((dep, k) => {
       if (k === 'length') {
         deps.push(dep);
       }
     });
-  } else if (key !== undefined) {
+  } else if (key !== undefined && depMap.get(key)) {
     deps.push(depMap.get(key));
   } else {
-    // TODO:
+    // dep 不存在则直接 return
+    return;
   }
 
   if (deps.length === 1) {
@@ -102,7 +116,7 @@ export function trigger(target: object, key: string | symbol, value: unknown) {
  * @param dep
  */
 export function triggerEffects(dep: Dep | ReactiveEffect[]) {
-  const effects = Array.isArray(dep) ? dep : [...dep];
+  const effects = isArray(dep) ? dep : [...dep];
   for (const effect of effects) {
     triggerEffect(effect);
   }
@@ -113,7 +127,5 @@ export function triggerEffects(dep: Dep | ReactiveEffect[]) {
  * @param effect
  */
 export function triggerEffect(effect: ReactiveEffect) {
-  if (effect !== activeEffect) {
-    effect.run();
-  }
+  effect.run();
 }

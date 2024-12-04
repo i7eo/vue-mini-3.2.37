@@ -1,7 +1,7 @@
 {
   "name": "@vue-mini/repository",
   "private": true,
-  "packageManager": "pnpm@9.14.2",
+  "packageManager": "pnpm@9.14.4",
   "type": "module",
   "keywords": [
     "monorepo",

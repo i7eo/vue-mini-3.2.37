@@ -1,2 +1,3 @@
 export { reactive } from './reactive';
-export { effect } from './effect';
+export { type ReactiveEffect, effect } from './effect';
+export { type Ref, ref } from './ref';

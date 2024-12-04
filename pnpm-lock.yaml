@@ -104,6 +104,10 @@ importers:
         version: 6.0.1(@types/node@22.10.1)(jiti@1.21.6)(tsx@4.19.2)(yaml@2.6.1)
 
   packages/reactivity:
+    dependencies:
+      '@vue-mini/share':
+        specifier: workspace:*
+        version: link:../share
     devDependencies:
       '@types/node':
         specifier: ^22.10.1
@@ -116,6 +120,13 @@ importers:
         version: 5.7.2
 
   packages/share:
+    dependencies:
+      es-toolkit:
+        specifier: ^1.29.0
+        version: 1.29.0
+      nanoid:
+        specifier: ^5.0.9
+        version: 5.0.9
     devDependencies:
       '@types/node':
         specifier: ^22.10.1
@@ -1354,6 +1365,9 @@ packages:
   es-module-lexer@1.5.4:
     resolution: {integrity: sha512-MVNK56NiMrOwitFB7cqDwq0CQutbw+0BvLshJSse0MUNU+y1FC3bUS/AQg7oUng+/wKrrki7JfmwtVHkVfPLlw==}
 
+  es-toolkit@1.29.0:
+    resolution: {integrity: sha512-GjTll+E6APcfAQA09D89HdT8Qn2Yb+TeDSDBTMcxAo+V+w1amAtCI15LJu4YPH/UCPoSo/F47Gr1LIM0TE0lZA==}
+
   esbuild@0.23.1:
     resolution: {integrity: sha512-VVNz/9Sa0bs5SELtn3f7qhJCDPCF5oMEl5cO9/SSinpE9hbPVvxbd572HH5AKiP7WD8INO53GgfDDhRjkylHEg==}
     engines: {node: '>=18'}
@@ -2198,6 +2212,11 @@ packages:
   nanoid@3.3.8:
     resolution: {integrity: sha512-WNLf5Sd8oZxOm+TzppcYk8gVOgP+l58xNy58D0nbUnOxOWRWvlcCV4kUF7ltmI6PsrLl/BgKEyS4mqsGChFN0w==}
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
+    hasBin: true
+
+  nanoid@5.0.9:
+    resolution: {integrity: sha512-Aooyr6MXU6HpvvWXKoVoXwKMs/KyVakWwg7xQfv5/S/RIgJMy0Ifa45H9qqYy7pTCszrHzP21Uk4PZq2HpEM8Q==}
+    engines: {node: ^18 || >=20}
     hasBin: true
 
   natural-compare-lite@1.4.0:
@@ -4504,6 +4523,8 @@ snapshots:
 
   es-module-lexer@1.5.4: {}
 
+  es-toolkit@1.29.0: {}
+
   esbuild@0.23.1:
     optionalDependencies:
       '@esbuild/aix-ppc64': 0.23.1
@@ -5427,6 +5448,8 @@ snapshots:
       thenify-all: 1.6.0
 
   nanoid@3.3.8: {}
+
+  nanoid@5.0.9: {}
 
   natural-compare-lite@1.4.0: {}
 
