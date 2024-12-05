@@ -1,5 +1,6 @@
 import { isArray } from '@vue-mini/share';
 import { type Dep, createDep } from './dep';
+import type { ComputedRefImpl } from './computed';
 
 type KeyToDepMap = Map<any, Dep>;
 /**
@@ -10,6 +11,7 @@ type KeyToDepMap = Map<any, Dep>;
  * 		2. `value`：指定对象的指定属性的 执行函数
  */
 const targetMap = new WeakMap<any, KeyToDepMap>();
+export type EffectScheduler = (...args: any[]) => any;
 
 /**
  * 记录当前的 effect（单例）
@@ -19,8 +21,12 @@ export let activeEffect: ReactiveEffect | undefined;
 
 export class ReactiveEffect<T = any> {
   active = true;
+  computed?: ComputedRefImpl<T>;
 
-  constructor(public fn: () => T) {}
+  constructor(
+    public fn: () => T,
+    public scheduler: EffectScheduler | null = null,
+  ) {}
 
   run() {
     // eslint-disable-next-line @typescript-eslint/no-this-alias
@@ -117,8 +123,14 @@ export function trigger(target: object, key: string | symbol, value: unknown) {
  */
 export function triggerEffects(dep: Dep | ReactiveEffect[]) {
   const effects = isArray(dep) ? dep : [...dep];
+
+  // 避免 computed effect 缓存执行死循环，这里手动调整执行顺序，保证 computed effect 先执行
   for (const effect of effects) {
-    triggerEffect(effect);
+    if (effect.computed) triggerEffect(effect);
+  }
+
+  for (const effect of effects) {
+    if (!effect.computed) triggerEffect(effect);
   }
 }
 
@@ -127,5 +139,9 @@ export function triggerEffects(dep: Dep | ReactiveEffect[]) {
  * @param effect
  */
 export function triggerEffect(effect: ReactiveEffect) {
-  effect.run();
+  if (effect.scheduler) {
+    effect.scheduler();
+  } else {
+    effect.run();
+  }
 }

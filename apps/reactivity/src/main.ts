@@ -1,5 +1,5 @@
 import './style.css';
-import { effect, ref } from '@vue-mini/vue';
+import { computed, effect, reactive } from '@vue-mini/vue';
 import typescriptLogo from './typescript.svg';
 import viteLogo from '/vite.svg';
 
@@ -77,18 +77,66 @@ document.querySelector('#app')!.innerHTML = entryInnerHTML;
 // }
 // ref1();
 
-function ref2() {
-  document.querySelector('#reactivity-test')!.innerHTML =
-    `<p id="ref-2" class="my-1"></p>`;
+// function ref2() {
+//   document.querySelector('#reactivity-test')!.innerHTML =
+//     `<p id="ref-2" class="my-1"></p>`;
 
-  const state = ref('i7eo');
+//   const state = ref('i7eo');
+
+//   effect(() => {
+//     document.querySelector('#ref-2')!.innerHTML = state.value;
+//   });
+
+//   setTimeout(() => {
+//     state.value = 'George';
+//   }, 2000);
+// }
+// ref2();
+
+// function computed1() {
+//   document.querySelector('#reactivity-test')!.innerHTML =
+//     `<p id="computed-1" class="my-1"></p>`;
+
+//   const state = reactive({
+//     name: '张三',
+//   });
+
+//   const name = computed(() => {
+//     // console.log("🚀 ~ name ~ computed")
+//     return `Name: ${state.name}`
+//   });
+
+//   effect(() => {
+//     document.querySelector('#computed-1')!.innerHTML = name.value;
+//     // document.querySelector('#computed-1')!.innerHTML = name.value;
+//   });
+
+//   setTimeout(() => {
+//     state.name = '李四';
+//   }, 2000);
+// }
+// computed1();
+
+function computed2() {
+  document.querySelector('#reactivity-test')!.innerHTML =
+    `<p id="computed-2" class="my-1"></p>`;
+
+  const state = reactive({
+    name: '张三',
+  });
+
+  const name = computed(() => {
+    console.log('🚀 ~ name ~ computed');
+    return `Name: ${state.name}`;
+  });
 
   effect(() => {
-    document.querySelector('#ref-2')!.innerHTML = state.value;
+    document.querySelector('#computed-2')!.innerHTML = name.value;
+    // document.querySelector('#computed-2')!.innerHTML = name.value;
   });
 
   setTimeout(() => {
-    state.value = 'George';
+    state.name = '李四';
   }, 2000);
 }
-ref2();
+computed2();

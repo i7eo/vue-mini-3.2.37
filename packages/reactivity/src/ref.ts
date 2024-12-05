@@ -51,13 +51,13 @@ class RefImpl<T> {
   }
 }
 
-function track(ref: Pick<RefImpl<unknown>, 'dep' | 'value'>) {
+export function track(ref: Pick<RefImpl<unknown>, 'dep' | 'value'>) {
   if (activeEffect) {
     trackEffects(ref.dep ?? (ref.dep = createDep()));
   }
 }
 
-function trigger(
+export function trigger(
   ref: Pick<RefImpl<unknown>, 'dep' | 'value'>,
   // @ts-ignore
   // eslint-disable-next-line unused-imports/no-unused-vars
