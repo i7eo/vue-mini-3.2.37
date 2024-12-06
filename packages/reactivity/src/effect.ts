@@ -36,9 +36,22 @@ export class ReactiveEffect<T = any> {
   }
 
   stop() {
-    this.active = false;
+    if (this.active) {
+      // cleanupEffect(this)
+      this.active = false;
+    }
   }
 }
+
+// function cleanupEffect(effect: ReactiveEffect) {
+//   const { deps } = effect;
+//   if (deps.length) {
+//     for (const dep of deps) {
+//       dep.delete(effect);
+//     }
+//     deps.length = 0;
+//   }
+// }
 
 export interface ReactiveEffectOptions {
   lazy?: boolean;

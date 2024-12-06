@@ -64,6 +64,12 @@ export function computed<T>(
 export function computed<T>(
   getterOrOptions: ComputedGetter<T> | WritableComputedOptions<T>,
 ) {
+  return createComputed(getterOrOptions);
+}
+
+function createComputed<T>(
+  getterOrOptions: ComputedGetter<T> | WritableComputedOptions<T>,
+) {
   let getter: ComputedGetter<T>;
   let setter: ComputedSetter<T>;
 

@@ -1,5 +1,5 @@
 import './style.css';
-import { effect, queuePreFlushCb, reactive } from '@vue-mini/vue';
+import { reactive, watch } from '@vue-mini/vue';
 import typescriptLogo from './typescript.svg';
 import viteLogo from '/vite.svg';
 
@@ -228,36 +228,78 @@ document.querySelector('#app')!.innerHTML = entryInnerHTML;
 // }
 // scheduler2();
 
-function scheduler3() {
+// function scheduler3() {
+//   document.querySelector('#reactivity-test')!.innerHTML =
+//     `<p id="scheduler-3" class="my-1"></p>`;
+
+//   const state = reactive({
+//     count: 1,
+//   });
+
+//   function log() {
+//     console.log(
+//       '🚀 ~ scheduler3 effect scheduler queuePreFlushCb ~ state.count:',
+//       state.count,
+//     );
+//   }
+
+//   effect(
+//     () => {
+//       console.log('🚀 ~ scheduler3 effect ~ state.count:', state.count);
+//     },
+//     {
+//       scheduler: () => {
+//         // 调度器可以控制执行规则
+//         queuePreFlushCb(log);
+//       },
+//     },
+//   );
+
+//   state.count = 2;
+//   state.count = 3;
+
+//   console.log('🚀 ~ scheduler3 ~ end');
+// }
+// scheduler3();
+
+// function watch1() {
+//   document.querySelector('#reactivity-test')!.innerHTML =
+//     `<p id="watch-1" class="my-1"></p>`;
+
+//   const state = reactive({
+//     name: 'i7eo',
+//   });
+
+//   watch(state, (newValue: any, oldValue: any) => {
+//     console.log('🚀 ~ watch ~ newValue/oldValue:', newValue, oldValue);
+//   });
+
+//   setTimeout(() => {
+//     state.name = 'George';
+//   }, 2000);
+// }
+// watch1();
+
+function watch2() {
   document.querySelector('#reactivity-test')!.innerHTML =
-    `<p id="scheduler-3" class="my-1"></p>`;
+    `<p id="watch-2" class="my-1"></p>`;
 
   const state = reactive({
-    count: 1,
+    name: 'i7eo',
   });
 
-  function log() {
-    console.log(
-      '🚀 ~ scheduler3 effect scheduler queuePreFlushCb ~ state.count:',
-      state.count,
-    );
-  }
-
-  effect(
-    () => {
-      console.log('🚀 ~ scheduler3 effect ~ state.count:', state.count);
+  watch(
+    state,
+    (newValue: any, oldValue: any) => {
+      console.log('🚀 ~ watch ~ newValue/oldValue:', newValue, oldValue);
     },
     {
-      scheduler: () => {
-        // 调度器可以控制执行规则
-        queuePreFlushCb(log);
-      },
+      immediate: true,
     },
   );
 
-  state.count = 2;
-  state.count = 3;
-
-  console.log('🚀 ~ scheduler3 ~ end');
+  setTimeout(() => {
+    state.name = 'George';
+  }, 2000);
 }
-scheduler3();
+watch2();

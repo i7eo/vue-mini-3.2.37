@@ -3,6 +3,11 @@ import { type Dep, createDep } from './dep';
 import { activeEffect, trackEffects, triggerEffects } from './effect';
 import { toReactive } from './reactive';
 
+export enum RefFlags {
+  IS_REF = '__v_isRef',
+  IS_SHALLOW = '__v_isShallow',
+}
+
 export interface Ref<T = any> {
   value: T;
 }
@@ -28,10 +33,12 @@ class RefImpl<T> {
   private _rawValue: T;
   public dep?: Dep = undefined;
   public readonly __v_isRef = true;
+  // public readonly [RefFlags.IS_REF] = true; ✅
 
   constructor(
     value: T,
     public readonly __v_isShallow: boolean,
+    // public readonly [RefFlags.IS_SHALLOW]: boolean, ❌
   ) {
     this._rawValue = value;
     this._value = __v_isShallow ? value : toReactive(value);

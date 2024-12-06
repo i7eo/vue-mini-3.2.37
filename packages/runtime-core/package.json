@@ -45,6 +45,7 @@
     "clean:deps": "rimraf node_modules"
   },
   "dependencies": {
+    "@vue-mini/reactivity": "workspace:*",
     "@vue-mini/share": "workspace:*"
   },
   "devDependencies": {

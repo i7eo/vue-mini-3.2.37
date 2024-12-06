@@ -121,6 +121,9 @@ importers:
 
   packages/runtime-core:
     dependencies:
+      '@vue-mini/reactivity':
+        specifier: workspace:*
+        version: link:../reactivity
       '@vue-mini/share':
         specifier: workspace:*
         version: link:../share
