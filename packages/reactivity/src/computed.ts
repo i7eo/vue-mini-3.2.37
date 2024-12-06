@@ -23,11 +23,17 @@ export interface WritableComputedOptions<T> {
   set: ComputedSetter<T>;
 }
 
+/**
+ * computed
+ * 1. 收集依赖靠 get 属性，见 line 56
+ * 2. 触发依赖靠 ReactiveEffect 第二个参数 scheduler，见 line 48
+ */
 export class ComputedRefImpl<T> {
   private _value!: T;
   public dep?: Dep = undefined;
   public readonly __v_isRef = true;
   public readonly effect: ReactiveEffect<T>;
+  /** 脏：为 false 时，表示需要触发依赖。为 true 时表示需要重新执行 run 方法，获取数据。即：数据脏了 */
   public _dirty = true;
 
   constructor(
@@ -35,8 +41,10 @@ export class ComputedRefImpl<T> {
     private readonly _setter: ComputedSetter<T>,
   ) {
     this.effect = new ReactiveEffect(getter, () => {
+      // 判断当前脏的状态，如果为 false，表示需要
       if (!this._dirty) {
         this._dirty = true;
+        // 触发依赖
         triggerRefValue(this);
       }
     });
@@ -44,7 +52,9 @@ export class ComputedRefImpl<T> {
   }
 
   get value() {
+    // 收集依赖
     trackRefValue(this);
+    // 判断当前脏的状态，如果为 true ，则表示需要重新执行 run，获取最新数据
     if (this._dirty) {
       this._dirty = false;
       this._value = this.effect.run()!;

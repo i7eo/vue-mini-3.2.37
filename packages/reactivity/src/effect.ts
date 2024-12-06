@@ -64,6 +64,7 @@ export interface ReactiveEffectOptions {
 export function effect<T = any>(fn: () => T, options?: ReactiveEffectOptions) {
   const reactiveEffect = new ReactiveEffect(fn);
 
+  // 存在 options，则合并配置对象。将 options 挂在对象上方便实时获取做判断，这里主要是将 scheduler 合并为 watch 提供便利
   if (options) {
     merge(reactiveEffect, options);
   }
@@ -71,7 +72,6 @@ export function effect<T = any>(fn: () => T, options?: ReactiveEffectOptions) {
   if (!options || !options.lazy) {
     reactiveEffect.run();
   }
-  // TODO: runner?
 }
 
 /**
@@ -154,6 +154,7 @@ export function triggerEffects(dep: Dep | ReactiveEffect[]) {
   const effects = isArray(dep) ? dep : [...dep];
 
   // 避免 computed effect 缓存执行死循环，这里手动调整执行顺序，保证 computed effect 先执行
+  // 不在依次触发，而是先触发所有的计算属性依赖，再触发所有的非计算属性依赖
   for (const effect of effects) {
     if (effect.computed) triggerEffect(effect);
   }
