@@ -1,5 +1,5 @@
 import './style.css';
-import { computed, effect, reactive } from '@vue-mini/vue';
+import { effect, queuePreFlushCb, reactive } from '@vue-mini/vue';
 import typescriptLogo from './typescript.svg';
 import viteLogo from '/vite.svg';
 
@@ -117,26 +117,147 @@ document.querySelector('#app')!.innerHTML = entryInnerHTML;
 // }
 // computed1();
 
-function computed2() {
+// function computed2() {
+//   document.querySelector('#reactivity-test')!.innerHTML =
+//     `<p id="computed-2" class="my-1"></p>`;
+
+//   const state = reactive({
+//     name: '张三',
+//   });
+
+//   const name = computed(() => {
+//     console.log('🚀 ~ name ~ computed');
+//     return `Name: ${state.name}`;
+//   });
+
+//   effect(() => {
+//     document.querySelector('#computed-2')!.innerHTML = name.value;
+//     // document.querySelector('#computed-2')!.innerHTML = name.value;
+//   });
+
+//   setTimeout(() => {
+//     state.name = '李四';
+//   }, 2000);
+// }
+// computed2();
+
+// function lazy1() {
+//   document.querySelector('#reactivity-test')!.innerHTML =
+//     `<p id="lazy-1" class="my-1"></p>`;
+
+//   const state = reactive({
+//     count: 1,
+//   });
+
+//   effect(
+//     () => {
+//       console.log('🚀 ~ lazy1 effect ~ state.count:', state.count);
+//     },
+//     {
+//       lazy: true,
+//     },
+//   );
+
+//   state.count = 2;
+
+//   console.log('🚀 ~ lazy1 ~ end');
+// }
+// lazy1();
+
+// function scheduler1() {
+//   document.querySelector('#reactivity-test')!.innerHTML =
+//     `<p id="scheduler-1" class="my-1"></p>`;
+
+//   const state = reactive({
+//     count: 1,
+//   });
+
+//   effect(
+//     () => {
+//       console.log('🚀 ~ scheduler1 effect ~ state.count:', state.count);
+//     },
+//     {
+//       scheduler: () => {
+//         // 调度器可以改变执行顺序
+//         setTimeout(() => {
+//           console.log(
+//             '🚀 ~ scheduler1 effect scheduler setTimeout ~ state.count:',
+//             state.count,
+//           );
+//         });
+//       },
+//     },
+//   );
+
+//   state.count = 2;
+
+//   console.log('🚀 ~ scheduler1 ~ end');
+// }
+// scheduler1();
+
+// function scheduler2() {
+//   document.querySelector('#reactivity-test')!.innerHTML =
+//     `<p id="scheduler-2" class="my-1"></p>`;
+
+//   const state = reactive({
+//     count: 1,
+//   });
+
+//   effect(
+//     () => {
+//       console.log('🚀 ~ scheduler2 effect ~ state.count:', state.count);
+//     },
+//     {
+//       scheduler: () => {
+//         // 调度器可以控制执行规则
+//         // 匿名函数在运行时创建导致引用不一致输出俩次 log，优化见 scheduler3
+//         queuePreFlushCb(() =>
+//           console.log(
+//             '🚀 ~ scheduler2 effect scheduler queuePreFlushCb ~ state.count:',
+//             state.count,
+//           ),
+//         );
+//       },
+//     },
+//   );
+
+//   state.count = 2;
+//   state.count = 3;
+
+//   console.log('🚀 ~ scheduler2 ~ end');
+// }
+// scheduler2();
+
+function scheduler3() {
   document.querySelector('#reactivity-test')!.innerHTML =
-    `<p id="computed-2" class="my-1"></p>`;
+    `<p id="scheduler-3" class="my-1"></p>`;
 
   const state = reactive({
-    name: '张三',
+    count: 1,
   });
 
-  const name = computed(() => {
-    console.log('🚀 ~ name ~ computed');
-    return `Name: ${state.name}`;
-  });
+  function log() {
+    console.log(
+      '🚀 ~ scheduler3 effect scheduler queuePreFlushCb ~ state.count:',
+      state.count,
+    );
+  }
 
-  effect(() => {
-    document.querySelector('#computed-2')!.innerHTML = name.value;
-    // document.querySelector('#computed-2')!.innerHTML = name.value;
-  });
+  effect(
+    () => {
+      console.log('🚀 ~ scheduler3 effect ~ state.count:', state.count);
+    },
+    {
+      scheduler: () => {
+        // 调度器可以控制执行规则
+        queuePreFlushCb(log);
+      },
+    },
+  );
 
-  setTimeout(() => {
-    state.name = '李四';
-  }, 2000);
+  state.count = 2;
+  state.count = 3;
+
+  console.log('🚀 ~ scheduler3 ~ end');
 }
-computed2();
+scheduler3();

@@ -1,4 +1,4 @@
-import { isArray } from '@vue-mini/share';
+import { isArray, merge } from '@vue-mini/share';
 import { type Dep, createDep } from './dep';
 import type { ComputedRefImpl } from './computed';
 
@@ -40,9 +40,25 @@ export class ReactiveEffect<T = any> {
   }
 }
 
-export function effect<T = any>(fn: () => T) {
+export interface ReactiveEffectOptions {
+  lazy?: boolean;
+  scheduler?: EffectScheduler;
+  // scope?: EffectScope
+  // allowRecurse?: boolean
+  // onStop?: () => void
+}
+
+export function effect<T = any>(fn: () => T, options?: ReactiveEffectOptions) {
   const reactiveEffect = new ReactiveEffect(fn);
-  reactiveEffect.run();
+
+  if (options) {
+    merge(reactiveEffect, options);
+  }
+
+  if (!options || !options.lazy) {
+    reactiveEffect.run();
+  }
+  // TODO: runner?
 }
 
 /**

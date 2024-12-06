@@ -119,6 +119,22 @@ importers:
         specifier: ^5.7.2
         version: 5.7.2
 
+  packages/runtime-core:
+    dependencies:
+      '@vue-mini/share':
+        specifier: workspace:*
+        version: link:../share
+    devDependencies:
+      '@types/node':
+        specifier: ^22.10.1
+        version: 22.10.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.3.5(jiti@1.21.6)(postcss@8.4.49)(tsx@4.19.2)(typescript@5.7.2)(yaml@2.6.1)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.7.2
+
   packages/share:
     dependencies:
       es-toolkit:
@@ -143,9 +159,9 @@ importers:
       '@vue-mini/reactivity':
         specifier: workspace:*
         version: link:../reactivity
-      '@vue-mini/share':
+      '@vue-mini/runtime-core':
         specifier: workspace:*
-        version: link:../share
+        version: link:../runtime-core
     devDependencies:
       '@types/node':
         specifier: ^22.10.1
