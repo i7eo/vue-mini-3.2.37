@@ -1,2 +1,3 @@
 export { watch } from './api-watch';
-export * from './scheduler';
+export { queuePreFlushCb } from './scheduler';
+export { h } from './h';

@@ -1,3 +1,3 @@
-const config = require('@unconfig/stylelint-config').all
+const config = require('@unconfig/stylelint-config').all;
 
-module.exports = config
+module.exports = config;

@@ -1,5 +1,5 @@
-const configBuilder = require('@unconfig/eslint-config').configBuilder
-const config = configBuilder()
+const configBuilder = require('@unconfig/eslint-config').configBuilder;
+const config = configBuilder();
 // [
 //   {
 //     ignores: ['playground/vue2/src', 'playground/nuxt', 'playground/astro'],
@@ -52,4 +52,4 @@ const config = configBuilder()
 //   },
 // ]
 
-module.exports = config
+module.exports = config;

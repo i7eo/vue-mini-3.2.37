@@ -1,3 +1,3 @@
-const config = require('@unconfig/lint-staged-config').all
+const config = require('@unconfig/lint-staged-config').all;
 
-module.exports = config
+module.exports = config;

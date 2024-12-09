@@ -1,3 +1,3 @@
-const config = require('@unconfig/simple-git-hooks-config').all
+const config = require('@unconfig/simple-git-hooks-config').all;
 
-module.exports = config
+module.exports = config;
