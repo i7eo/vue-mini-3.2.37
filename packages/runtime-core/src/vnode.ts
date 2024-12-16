@@ -6,6 +6,10 @@ import {
   isString,
 } from '@vue-mini/share';
 
+export const Fragment = Symbol('Fragment');
+export const Text = Symbol('Text');
+export const Comment = Symbol('Comment');
+
 export interface VNode {
   __v_isVNode: boolean;
   type: any;
@@ -15,7 +19,13 @@ export interface VNode {
 }
 
 export function createVNode(type: any, props: any, children: any): VNode {
-  const shapeFlag = isString(type) ? ShapeFlags.ELEMENT : 0;
+  const shapeFlag = isString(type)
+    ? ShapeFlags.ELEMENT
+    : isObject(type)
+      ? ShapeFlags.STATEFUL_COMPONENT
+      : isFunction(type)
+        ? ShapeFlags.FUNCTIONAL_COMPONENT
+        : 0;
 
   return createBaseVNode(type, props, children, shapeFlag);
 }
@@ -43,7 +53,7 @@ function createBaseVNode(
 export function normalizeChildren(vnode: VNode, children: unknown) {
   let type = 0;
 
-  if (children === null) {
+  if (children == null) {
     children = null;
   } else if (isArray(children)) {
     type = ShapeFlags.ARRAY_CHILDREN;

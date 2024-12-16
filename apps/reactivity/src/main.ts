@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import './style.css';
-import { h } from '@vue-mini/vue';
+import { Comment, Fragment, Text, h } from '@vue-mini/vue';
 import typescriptLogo from './typescript.svg';
 import viteLogo from '/vite.svg';
 
@@ -326,17 +326,45 @@ function runtimeTest() {
   // }
   // h1();
 
-  function h2() {
-    document.querySelector('#runtime-test')!.innerHTML =
-      `<p id="h-2" class="my-1"></p>`;
+  // function h2() {
+  //   document.querySelector('#runtime-test')!.innerHTML =
+  //     `<p id="h-2" class="my-1"></p>`;
 
-    const vnode = h('div', { class: 'test' }, [
-      h('p', 'h-2 p1'),
-      h('p', 'h-2 p2'),
-      h('p', 'h-2 p3'),
-    ]);
-    console.log('🚀 ~ h2 ~ vnode:', vnode);
+  //   const vnode = h('div', { class: 'test' }, [
+  //     h('p', 'h-2 p1'),
+  //     h('p', 'h-2 p2'),
+  //     h('p', 'h-2 p3'),
+  //   ]);
+  //   console.log('🚀 ~ h2 ~ vnode:', vnode);
+  // }
+  // h2();
+
+  // function h3() {
+  //   document.querySelector('#runtime-test')!.innerHTML =
+  //     `<p id="h-3" class="my-1"></p>`;
+
+  //   const component = {
+  //     render() {
+  //       const vnode1 = h('div', { class: 'test' }, 'hello h-component');
+  //       console.log('🚀 ~ vnode1:', vnode1);
+  //       return vnode1;
+  //     },
+  //   };
+
+  //   const vnode2 = h(component);
+  //   console.log('🚀 ~ vnode2:', vnode2);
+  // }
+  // h3();
+
+  function h4() {
+    document.querySelector('#runtime-test')!.innerHTML =
+      `<p id="h-3" class="my-1"></p>`;
+
+    const vnode1 = h(Text, 'this is text vnode1');
+    const vnode2 = h(Comment, 'this is comment vnode2');
+    const vnode3 = h(Fragment, 'this is fragment vnode3');
+    console.log('🚀 ~ h4 ~ vnode1/vnode2/vnode3:', vnode1, vnode2, vnode3);
   }
-  h2();
+  h4();
 }
 runtimeTest();
