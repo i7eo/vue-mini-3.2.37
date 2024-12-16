@@ -1,9 +1,12 @@
+import { isProxy } from '@vue-mini/reactivity';
 import {
   ShapeFlags,
   isArray,
   isFunction,
   isObject,
   isString,
+  normalizeClass,
+  normalizeStyle,
 } from '@vue-mini/share';
 
 export const Fragment = Symbol('Fragment');
@@ -19,6 +22,21 @@ export interface VNode {
 }
 
 export function createVNode(type: any, props: any, children: any): VNode {
+  if (props) {
+    let { class: klass, style } = props;
+    if (klass && !isString(klass)) {
+      props.class = normalizeClass(klass);
+    }
+    if (isObject(style)) {
+      // reactive state objects need to be cloned since they are likely to be
+      // mutated
+      if (isProxy(style) && !isArray(style)) {
+        style = Object.assign({}, style);
+      }
+      props.style = normalizeStyle(style);
+    }
+  }
+
   const shapeFlag = isString(type)
     ? ShapeFlags.ELEMENT
     : isObject(type)

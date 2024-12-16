@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import './style.css';
-import { Comment, Fragment, Text, h } from '@vue-mini/vue';
+import { h } from '@vue-mini/vue';
 import typescriptLogo from './typescript.svg';
 import viteLogo from '/vite.svg';
 
@@ -356,15 +356,77 @@ function runtimeTest() {
   // }
   // h3();
 
-  function h4() {
+  // function h4() {
+  //   document.querySelector('#runtime-test')!.innerHTML =
+  //     `<p id="h-3" class="my-1"></p>`;
+
+  //   const vnode1 = h(Text, 'this is text vnode1');
+  //   const vnode2 = h(Comment, 'this is comment vnode2');
+  //   const vnode3 = h(Fragment, 'this is fragment vnode3');
+  //   console.log('🚀 ~ h4 ~ vnode1/vnode2/vnode3:', vnode1, vnode2, vnode3);
+  // }
+  // h4();
+
+  function h5() {
     document.querySelector('#runtime-test')!.innerHTML =
       `<p id="h-3" class="my-1"></p>`;
 
-    const vnode1 = h(Text, 'this is text vnode1');
-    const vnode2 = h(Comment, 'this is comment vnode2');
-    const vnode3 = h(Fragment, 'this is fragment vnode3');
-    console.log('🚀 ~ h4 ~ vnode1/vnode2/vnode3:', vnode1, vnode2, vnode3);
+    const vnode1 = h('div', { class: 'red' }, 'this is vnode1');
+    const vnode2 = h(
+      'div',
+      {
+        class: {
+          red: true,
+        },
+      },
+      'this is vnode2',
+    );
+    const vnode3 = h(
+      'div',
+      {
+        class: [
+          {
+            red: true,
+          },
+          {
+            blue: true,
+          },
+        ],
+      },
+      'this is vnode2',
+    );
+    const vnode4 = h(
+      'div',
+      {
+        style: {
+          color: 'red',
+        },
+      },
+      'this is vnode2',
+    );
+    const vnode5 = h(
+      'div',
+      {
+        style: [
+          {
+            color: 'red',
+          },
+          {
+            fontSize: '12px',
+          },
+        ],
+      },
+      'this is vnode2',
+    );
+    console.log(
+      '🚀 ~ h5 ~ vnode1/vnode2/vnode3/vnode4/vnode5:',
+      vnode1,
+      vnode2,
+      vnode3,
+      vnode4,
+      vnode5,
+    );
   }
-  h4();
+  h5();
 }
 runtimeTest();
